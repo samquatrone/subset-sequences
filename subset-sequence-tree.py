@@ -46,13 +46,13 @@ def generate_tree(alphabet, start_word):
     max_words = comb(len(alphabet), len(start_word))
     data = {
         'alphabet': alphabet,
-        'seed word': start_word,
-        'node_count': {depth: 0 for depth in range(max_words+len(start_word)-1)},
+        'start_word': start_word,
+        'node_count': {depth: 0 for depth in range(max_words+len(start_word))},
         'failure_count': {},
         'depth_from_repeat_count': {
             depth: {
                 distance: 0 for distance in range(len(start_word)+1, depth) 
-            } for depth in range(max_words+len(start_word)-1)
+            } for depth in range(max_words+len(start_word))
         },
         'sequences': [],
     }
@@ -75,13 +75,13 @@ def generate_tree(alphabet, start_word):
 
             data['failure_count'][depth] += 1
 
-            if depth not in data['depth_from_repeat']:
-                data['depth_from_repeat'][depth] = {}
+            if depth not in data['depth_from_repeat_count']:
+                data['depth_from_repeat_count'][depth] = {}
             failure_distance = depth - current.seen_words.index(tuple(sorted(current.word)))
-            if failure_distance not in data['depth_from_repeat'][depth]:
-                data['depth_from_repeat'][depth][failure_distance] = 0
+            if failure_distance not in data['depth_from_repeat_count'][depth]:
+                data['depth_from_repeat_count'][depth][failure_distance] = 0
             
-            data['depth_from_repeat'][depth][failure_distance] += 1
+            data['depth_from_repeat_count'][depth][failure_distance] += 1
 
         # print(f'Queue length: {len(queue)}')    # FIXME:
     return root, data
@@ -146,7 +146,7 @@ def verify_sequence(sequence, alphabet, word_length):
 
 
 if __name__ == '__main__':
-    alphabet = ('a','b','c','d', 'e', 'f')
+    alphabet = ('a','b','c','d', 'e')
     start_word = 'abc'
 
     root, data = generate_tree(alphabet, start_word)
@@ -156,6 +156,8 @@ if __name__ == '__main__':
             data['sequences'].remove(sequence)
 
     data['sequence_count'] = len(data['sequences'])
+    data['alphabet_length'] = len(alphabet)
+    data['combinations_number'] = comb(len(alphabet), len(start_word))
 
     print_tree_to_file(root, 'game_tree.txt', data)
 
