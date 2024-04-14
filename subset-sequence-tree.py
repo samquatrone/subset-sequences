@@ -49,7 +49,7 @@ def generate_tree(alphabet, start_word):
         'seed word': start_word,
         'node_count': {depth: 0 for depth in range(max_words+len(start_word)-1)},
         'failure_count': {},
-        'depth_from_repeat': {
+        'depth_from_repeat_count': {
             depth: {
                 distance: 0 for distance in range(len(start_word)+1, depth) 
             } for depth in range(max_words+len(start_word)-1)
