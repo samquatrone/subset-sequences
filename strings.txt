@@ -1,0 +1,178 @@
+abedceadbca
+abedceacbda
+abedcbdaeca
+abedcbdacea
+abedcaecbda
+abedcadbcea
+abedbceadca
+abedbceacda
+abedbcdaeca
+abedbcdacea
+abedbcaecda
+abedbcadcea
+abedaecdbca
+abedaecbdca
+abedacdbcea
+abedacbdcea
+abecdeadbca
+abecdeacbda
+abecdbcaeda
+abecdbcadea
+abecdaedbca
+abecdacbdea
+abecbdeadca
+abecbdeacda
+abecbdcaeda
+abecbdcadea
+abecbdaedca
+abecbdacdea
+abecaedcbda
+abecaedbcda
+abecadcbdea
+abecadbcdea
+abeadecdbca
+abeadecbdca
+abeadcedbca
+abeadcbdeca
+abeadbcedca
+abeadbcdeca
+abeacedcbda
+abeacedbcda
+abeacdecbda
+abeacdbceda
+abeacbdecda
+abeacbdceda
+abdecdaebca
+abdecdacbea
+abdecbeadca
+abdecbeacda
+abdecaebcda
+abdecadcbea
+abdebceadca
+abdebceacda
+abdebcdaeca
+abdebcdacea
+abdebcaecda
+abdebcadcea
+abdeadcebca
+abdeadcbeca
+abdeacebcda
+abdeacbecda
+abdcedaebca
+abdcedacbea
+abdcebcaeda
+abdcebcadea
+abdceadebca
+abdceacbeda
+abdcbedaeca
+abdcbedacea
+abdcbecaeda
+abdcbecadea
+abdcbeadeca
+abdcbeaceda
+abdcaecbeda
+abdcaebceda
+abdcadecbea
+abdcadebcea
+abdaedcebca
+abdaedcbeca
+abdaecdebca
+abdaecbedca
+abdaebcedca
+abdaebcdeca
+abdacedcbea
+abdacebcdea
+abdacdecbea
+abdacdebcea
+abdacbedcea
+abdacbecdea
+abcedcaebda
+abcedcadbea
+abcedbeadca
+abcedbeacda
+abcedaebdca
+abcedacdbea
+abcebdeadca
+abcebdeacda
+abcebdcaeda
+abcebdcadea
+abcebdaedca
+abcebdacdea
+abceadebdca
+abceadbedca
+abceacdebda
+abceacdbeda
+abcdecaebda
+abcdecadbea
+abcdebdaeca
+abcdebdacea
+abcdeadbeca
+abcdeacebda
+abcdbedaeca
+abcdbedacea
+abcdbecaeda
+abcdbecadea
+abcdbeadeca
+abcdbeaceda
+abcdaedbeca
+abcdaebdeca
+abcdacedbea
+abcdacebdea
+abcaedcebda
+abcaedbecda
+abcaecdebda
+abcaecdbeda
+abcaebdecda
+abcaebdceda
+abcadecdbea
+abcadebdcea
+abcadcedbea
+abcadcebdea
+abcadbedcea
+abcadbecdea
+
+4531425
+4531524
+4524135
+4524153
+4513524
+4514253
+4253145
+4253154
+4254135
+4254153
+4251354
+4251453
+4135425
+4135245
+4154253
+4152453
+1435425
+1435245
+1453425
+1452435
+1425345
+1425435
+
+(1 7)(2 9)(3 6)(4 8)(5 10)
+(1 7)(2 9)(3 6)(4 10)(5 8)
+(1 8)(2 6)(3 9)(4 7)(5 10)
+(1 8)(2 6)(3 10)(4 7)(5 9)
+(1 6)(2 9)(3 7)(4 10)(5 8)
+(1 6)(2 8)(3 10)(4 7)(5 9)
+(1 8)(2 5)(3 7)(4 9)(6 10)
+(1 8)(2 5)(3 7)(4 10)(6 9)
+(1 8)(2 5)(3 9)(4 7)(6 10)
+(1 8)(2 5)(3 10)(4 7)(6 9)
+(1 7)(2 5)(3 8)(4 10)(6 9)
+(1 7)(2 5)(3 10)(4 8)(6 9)
+(1 5)(2 9)(3 6)(4 8)(7 10)
+(1 5)(2 8)(3 6)(4 9)(7 10)
+(1 5)(2 8)(3 10)(4 7)(6 9)
+(1 5)(2 7)(3 10)(4 8)(6 9)
+(1 4)(2 9)(3 6)(5 8)(7 10)
+(1 4)(2 8)(3 6)(5 9)(7 10)
+(1 4)(2 9)(3 7)(5 8)(6 10)
+(1 4)(2 7)(3 9)(5 8)(6 10)
+(1 4)(2 6)(3 8)(5 9)(7 10)
+(1 4)(2 6)(3 9)(5 8)(7 10)

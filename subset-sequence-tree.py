@@ -31,7 +31,7 @@ class Node:
                     )
                 )
 
-        self.children = children
+        # self.children = children
         return children
 
     def is_valid(self):
@@ -60,7 +60,7 @@ def generate_tree(alphabet, start_word):
     queue: deque[Node] = deque([root])
 
     while queue:    
-        current = queue.popleft()
+        current = queue.pop()
         depth = len(current.seen_words) # depth starts at 0 with root.
         data['node_count'][depth] += 1
 
@@ -68,12 +68,16 @@ def generate_tree(alphabet, start_word):
             children = current.generate_children()
             queue.extend(children)
         elif len(current.seen_words) == max_words:
-            data['sequences'].append(current.state[:-1])
+            if current.state[:-1] not in data['sequences']:
+                data['sequences'].append(current.state[:-1])
+                print(f'Sequence found: {current.state[:-1]}')    # FIXME:
         else:
             if depth not in data['failure_count']:
                 data['failure_count'][depth] = 0
 
             data['failure_count'][depth] += 1
+
+            # print(f'Failure found: {current.state}')    # FIXME:
 
             if depth not in data['depth_from_repeat_count']:
                 data['depth_from_repeat_count'][depth] = {}
@@ -84,6 +88,8 @@ def generate_tree(alphabet, start_word):
             data['depth_from_repeat_count'][depth][failure_distance] += 1
 
         # print(f'Queue length: {len(queue)}')    # FIXME:
+
+
     return root, data
 
 def print_tree_to_file(node: Node, filename: str, data: dict):
@@ -143,11 +149,25 @@ def verify_sequence(sequence, alphabet, word_length):
 
     return True
 
+def print_data_file(data, filename):
+    with open(filename, 'w', encoding='utf-8') as f:
+        for label, dataset in data.items():
+            f.write(f'{label}:\n')
+
+            if isinstance(dataset, (list,tuple)):
+                for line in dataset:
+                        f.write('  ' + str(line) + '\n')
+
+            elif isinstance(dataset, dict):
+                for key, value in dataset.items():
+                    f.write(f'  {key}: {value}\n')
+            else:
+                f.write('  ' + str(dataset) + '\n')
 
 
 if __name__ == '__main__':
-    alphabet = ('a','b','c','d', 'e')
-    start_word = 'abc'
+    alphabet = ('a','b','c','d','e','f','g')
+    start_word = 'ab'
 
     root, data = generate_tree(alphabet, start_word)
 
@@ -159,13 +179,15 @@ if __name__ == '__main__':
     data['alphabet_length'] = len(alphabet)
     data['combinations_number'] = comb(len(alphabet), len(start_word))
 
-    print_tree_to_file(root, 'game_tree.txt', data)
+    print_data_file(data, f'data-s-{len(alphabet)}-{len(start_word)}')
+
+    # print_tree_to_file(root, 'game_tree.txt', data)
 
 
 
 
 '''
-Interesting analytics:
+Analytics:
     - List valid sequences                                      ✓
     - How many are unique up to relabeling?                     x
         - How many including all relabelings?                   x
