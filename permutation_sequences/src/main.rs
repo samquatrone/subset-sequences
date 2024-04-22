@@ -1,5 +1,8 @@
 use std::collections::HashSet;
 use num_integer::{self, binomial};
+use std::fs::File;
+use std::io::{self, Write};
+use std::path::Path;
 
 
 // Nodes should only be created if they are valid.
@@ -75,7 +78,6 @@ impl Node {
     //     let mut i: u32 = 1;
     //         while i <= num {
     //             if i & num != 0 {
-
     //             }
     //             i <<= 1
     //         }
@@ -109,7 +111,7 @@ fn generate_tree(alphabet_size: usize, subset_size: usize) -> Vec<Vec<u32>> {
 
         if current_sequence.len() == max_depth {
             valid_sequences.push(current_sequence.clone());
-            println!("Found sequence: {:?}", current_sequence)
+            // println!("Found sequence: {:?}", current_sequence)
         }
 
         current_node.generate_children(alphabet_size, subset_size, &mut queue);
@@ -133,20 +135,55 @@ fn generate_root(subset_size: usize) -> Node {
     }
 }
 
-
-fn main() {
-    let _sequences = generate_tree(5, 2);
-    println!("Sequence length: {}", _sequences.len());
-
-    // let test_node = Node {
-    //     label: 6,
-    //     sequence: vec![1,2,4],
-    //     seen_labels: [3,6].into_iter().collect()
-    // };
-
-    // let mut dummy_queue = Vec::new();
-    // test_node.generate_children(5, 2, &mut dummy_queue)
-
-    // let root = generate_root(2);
-    // println!("label: {}, sequence: {:?}, seen_labels: {:?}", root.label, root.sequence, root.seen_labels);
+fn format_sequences(sequences: &Vec<Vec<u32>>) -> Vec<String> {
+    sequences
+    .iter()
+    .map(|sequence| {
+        sequence
+            .iter()
+            .map(|&num| {
+                let power = (num as f64).log2() as u32;
+                power.to_string()
+            })
+            .collect::<Vec<String>>()
+            .join(" ")
+    })
+    .collect()
 }
+
+fn save_sequences(sequences: &Vec<String>, filename: String) -> io::Result<()> {
+    let folder_path = Path::new("./sequences/");
+    if !folder_path.exists() {
+        std::fs::create_dir(folder_path)?;
+    }
+
+    let file_path = folder_path.join(filename);
+    let mut file = File::create(file_path)?;
+
+    writeln!(file, "Number of sequences: {}\n", sequences.len())?;
+    if sequences.is_empty() {
+        return Ok(())
+    }
+    writeln!(file, "Sequences:")?;
+
+    for sequence in sequences {
+        writeln!(file, "{}", sequence)?;
+    }
+
+    Ok(())
+}
+
+fn main() -> io::Result<()> {
+    let alphabet_size: usize = 7;
+    let subset_size: usize = 3;
+
+    let sequences = generate_tree(alphabet_size, subset_size);
+    println!("Number of sequences: {}", sequences.len());
+    println!("Printing sequences!");
+    
+    let formatted_sequences = format_sequences(&sequences);
+
+    let filename = format!("sequence-{}-{}.txt", alphabet_size, subset_size);
+    save_sequences(&formatted_sequences, filename)
+}
+
