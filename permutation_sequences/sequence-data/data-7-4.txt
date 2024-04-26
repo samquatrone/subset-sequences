@@ -1,0 +1,41 @@
+Number of sequences: 8428
+Number of iterations: 30138468
+Depth Map:
+   Depth: 0, Node count: 0
+   Depth: 1, Node count: 0
+   Depth: 2, Node count: 0
+   Depth: 3, Node count: 0
+   Depth: 4, Node count: 1
+   Depth: 5, Node count: 2
+   Depth: 6, Node count: 5
+   Depth: 7, Node count: 14
+   Depth: 8, Node count: 40
+   Depth: 9, Node count: 111
+   Depth: 10, Node count: 288
+   Depth: 11, Node count: 719
+   Depth: 12, Node count: 1730
+   Depth: 13, Node count: 3970
+   Depth: 14, Node count: 9045
+   Depth: 15, Node count: 19477
+   Depth: 16, Node count: 40868
+   Depth: 17, Node count: 83177
+   Depth: 18, Node count: 156274
+   Depth: 19, Node count: 276204
+   Depth: 20, Node count: 455237
+   Depth: 21, Node count: 730045
+   Depth: 22, Node count: 1171485
+   Depth: 23, Node count: 1805911
+   Depth: 24, Node count: 2540171
+   Depth: 25, Node count: 3025319
+   Depth: 26, Node count: 3125909
+   Depth: 27, Node count: 3161250
+   Depth: 28, Node count: 3294150
+   Depth: 29, Node count: 3498878
+   Depth: 30, Node count: 3441415
+   Depth: 31, Node count: 2236993
+   Depth: 32, Node count: 847950
+   Depth: 33, Node count: 169484
+   Depth: 34, Node count: 17062
+   Depth: 35, Node count: 8428
+   Depth: 36, Node count: 8428
+   Depth: 37, Node count: 8428

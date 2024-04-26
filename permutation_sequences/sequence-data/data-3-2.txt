@@ -1,0 +1,7 @@
+Number of sequences: 1
+Number of iterations: 2
+Depth Map:
+   Depth: 0, Node count: 0
+   Depth: 1, Node count: 0
+   Depth: 2, Node count: 1
+   Depth: 3, Node count: 1
