@@ -5,6 +5,9 @@ use std::io::{self, Write};
 use std::path::Path;
 use std::time::Instant;
 
+use rand::thread_rng;
+use rand::seq::SliceRandom;
+
 
 // Nodes should only be created if they are valid.
 // Instead, children are checked for validity before instantiation.
@@ -14,7 +17,6 @@ struct Node {
     seen_labels: HashSet<u16>, // Contains its own label
 }
 impl Node {
-
     fn new(parent_node: &Node, subset_size: usize, letter: u16) -> Option<Node> {
         let child_label = parent_node.get_child_label(subset_size, letter);
         if child_label.is_some() {
@@ -39,6 +41,7 @@ impl Node {
     fn generate_children(&self, alphabet_size: usize, subset_size: usize, queue: &mut Vec<Node>) {
         let max_letter = *self.sequence.iter().max().unwrap();
 
+        // Find all letters from 1...max_letter which are not in self.sequence
         let used_letters = self.label;
         let all_letters = (max_letter << 1) - 1;
         let new_letters_label = all_letters & !used_letters;
@@ -53,36 +56,22 @@ impl Node {
             i <<= 1
         }
 
-        // println!("Max letter = {}", max_letter);
-        // println!("Used letters: {}, All letters: {}, New letters label = {}", used_letters, all_letters, new_letters_label);
-
+        // If any letters from the alphabet have not been seen, add the next greatest letter to new_letters.
         if max_letter < (1 << alphabet_size - 1) {
             new_letters.push(max_letter << 1);
         }
-        // println!("New letters for sequence {:?}: {:?}", &self.sequence, &new_letters);
-
 
         for letter in new_letters {
+            // Try to create a new child from letter
+            // If this child would contain a duplicate label, the node is not created
             let new_child = Node::new(&self, subset_size, letter);
             if new_child.is_some() {
                 queue.push(new_child.unwrap());
-                // println!("Oh yeah, {} is also okay", {})
-            }
-            else {
-                // println!("Failure to add letter: {}", letter);
             }
         }
 
     }
     
-    // fn _binary_decomp(num:u16) {
-    //     let mut i: u16 = 1;
-    //         while i <= num {
-    //             if i & num != 0 {
-    //             }
-    //             i <<= 1
-    //         }
-    // }
     
     fn get_child_label(&self, subset_size: usize, new_element: u16) -> Option<u16> {
         let new_label = new_element + self.label - self.sequence[self.sequence.len()-subset_size];
@@ -97,23 +86,32 @@ impl Node {
     }
 }
 
-fn generate_tree(root: Node, alphabet_size: usize, subset_size: usize) -> (Vec<Vec<u16>>, Vec<u32>, u32)  {
+fn generate_tree(root: Node, alphabet_size: usize, subset_size: usize) -> (Vec<Vec<u16>>, Vec<u128>, u128)  {
     let mut valid_sequences: Vec<Vec<u16>> = Vec::new();
     let mut queue: Vec<Node> = Vec::new();
+    // let mut queue: VecDeque<Node> = VecDeque::new();
 
     // Potential optimization here
     // We don't need to check the very last few depths (assuming every sequence is cyclic)
     let max_depth = binomial(alphabet_size, subset_size)+ subset_size-1;   
 
-    let mut num_iterations: u32 = 0;
-    let mut depth_map: Vec<u32> = vec![0; max_depth];
+    let mut num_iterations: u128 = 0;
+    let mut depth_map: Vec<u128> = vec![0; max_depth];
     let mut num_sequences: u32 = 0;
+
+    // let mut rand_num: u32 = 0;
+    // let mut rng = thread_rng();
+    let mut found_sequence = false;
 
 
     queue.push(root);
+    let mut current_node: Node;
 
     while !queue.is_empty() {
-        let current_node = queue.pop().unwrap();
+
+        current_node = queue.pop().unwrap();
+
+        
         let current_sequence = &current_node.sequence;
 
         let current_depth = current_sequence.len();
@@ -122,11 +120,8 @@ fn generate_tree(root: Node, alphabet_size: usize, subset_size: usize) -> (Vec<V
         if current_depth == max_depth {
             valid_sequences.push(current_sequence.clone());
             num_sequences += 1;
-            // println!(
-            //     "Found sequence: {}! Sequences found: {}", 
-            //     sequence_to_string(current_sequence), 
-            //     &valid_sequences.len()
-            // );
+            println!("Found one! {}", format_sequence(current_sequence));
+            found_sequence = true;
         }
         else {
             current_node.generate_children(alphabet_size, subset_size, &mut queue);
@@ -134,19 +129,21 @@ fn generate_tree(root: Node, alphabet_size: usize, subset_size: usize) -> (Vec<V
 
         depth_map[current_depth-1] += 1;
         num_iterations += 1;
+        // rand_num = rng.gen_range(0..=100);
 
         if num_iterations % 10000000 == 0 {
-            println!("Sequence count: {}", num_sequences);
+            println!("Sequence count: {}   Iteration count: {}   Queue length: {}", num_sequences, num_iterations, queue.len());
+            if !found_sequence && queue.len() < 10000000 {
+                // println!("Shuffling...");
+                queue.shuffle(&mut thread_rng());
+            }
+            found_sequence = false;
         }
-
     }
 
     (valid_sequences, depth_map, num_iterations)
 }
 
-// fn create_depth_map(alphabet_size: usize, subset_size: usize) -> HashMap<u32, u32> {
-
-// }
 
 fn generate_root(subset_size: usize) -> Node {
     let label = (1 << subset_size) - 1 << 1;
@@ -174,14 +171,26 @@ fn format_sequences(sequences: &Vec<Vec<u16>>) -> Vec<String> {
                 power.to_string()
             })
             .collect::<Vec<String>>()
-            .join(" ")
+            .join(",")
     })
     .collect()
 }
 
-fn _sequence_to_string(sequence: &Vec<u16>) -> String {
-    sequence.into_iter().map(|x| x.to_string()).into_iter().collect::<Vec<String>>().join(" ")
+fn format_sequence(sequence: &Vec<u16>) -> String {
+    sequence
+        .iter()
+        .map(|&num| {
+            let power = (num as f64).log2() as u16;
+            power.to_string()
+        })
+        .collect::<Vec<String>>()
+        .join(",")
 }
+
+fn _sequence_to_string(sequence: &Vec<u16>) -> String {
+    sequence.into_iter().map(|x| x.to_string()).into_iter().collect::<Vec<String>>().join(",")
+}
+
 
 fn save_sequences(sequences: &Vec<String>, filename: String) -> io::Result<()> {
     let folder_path = Path::new("./sequences/");
@@ -199,7 +208,7 @@ fn save_sequences(sequences: &Vec<String>, filename: String) -> io::Result<()> {
     Ok(())
 }
 
-fn save_data(data: (&Vec<Vec<u16>>, &Vec<u32>, u32), filename: String ) -> io::Result<()> {
+fn save_data(data: (&Vec<Vec<u16>>, &Vec<u128>, u128), filename: String ) -> io::Result<()> {
     let (sequences, depth_map, num_iterations) = data;
     let folder_path = Path::new("./sequence-data/");
     if !folder_path.exists() {
@@ -261,7 +270,7 @@ fn main() -> io::Result<()> {
     
     let formatted_sequences = format_sequences(&sequences);
 
-    let sequence_filename = format!("sequence-{}-{}.txt", alphabet_size, subset_size);
+    let sequence_filename = format!("sequence-{}-{}.csv", alphabet_size, subset_size);
     let data_filename = format!("data-{}-{}.txt", alphabet_size, subset_size);
     
     {
