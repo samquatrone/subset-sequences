@@ -62,6 +62,7 @@ def check_unique_sequences(strings):
 
     for s in strings:
         normal_s = normalize_sequence(s)
+        # normal_s = s
         if normal_s not in normal_forms:
             normal_forms.add(normal_s)
     unique_sequences = check_rotations(normal_forms)
@@ -123,11 +124,12 @@ def cyclify(sequence, subset_size):
     return sequence[:-subset_size+1]
 
 if __name__ == '__main__':
-    alphabet_length = 8
-    subset_size = 5
+    alphabet_length = 7
+    subset_size = 4
 
-    filename = f'permutation_sequences\sequences\sequence-{alphabet_length}-{subset_size}.txt'
-    strings = [s.replace(" ", "") for s in read_strings_from_file(filename)]
+    # filename = f'permutation_sequences\sequences\\sequence-{alphabet_length}-{subset_size}.csv'
+    filename = f'permutation_sequences\sequences\\sequence-{alphabet_length}-{subset_size}.csv'
+    strings = [s.replace(",", "") for s in read_strings_from_file(filename)]
     # strings = [
     #     '0123420413',
     #     '0123420314',

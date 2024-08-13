@@ -8,7 +8,15 @@ subset_size = 2
 
 sequence_length = comb(alphabet_size, subset_size)
 
+if sequence_length % alphabet_size != 0:
+    raise ValueError('No sequences exist: k does not divide k choose n.')
+
+sequence_seed = ''.join(str(a) for a in alphabet) * (sequence_length // alphabet_size)
+print(sequence_seed)
+
 valid_sequences = set()
+
+
 
 for sequence in permutations('0123401234'):
     sequence = ''.join(sequence)
