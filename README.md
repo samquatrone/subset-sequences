@@ -19,7 +19,9 @@ Running th rust program with `cargo run --release` will prompt you for a particu
 subset size and by entering valid numbers, the program will either complete or update you with the number of sequences found every 10 million iterations.
 
 ## Data
-All of the data from computations is stored into permutation_sequences/sequence-data and the list of valid sequences is stored in permutation_sequences/sequences. 
-These files are labeled by the alphabet size and the length of subsequence respectively.
+All of the data from computations is stored into subset_sequences/sequence-data and the list of valid sequences is stored in subset_sequences/sequences with the
+names data-k-n.txt and sequence-k-n.csv, respectively.
+Due to the large sizes of these files, subset_sequence/sequences is not tracked, but all data can be accessed with the following link:
+https://drive.google.com/drive/folders/1MmbN3PJwFkLt6ZNzSwF_0MmBVNdIH5s8?usp=sharing
 
 For any inquiries or corrections feel free to contact me at samquatrone@gmail.com.
