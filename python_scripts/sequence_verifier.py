@@ -124,7 +124,7 @@ if __name__ == '__main__':
     alphabet_length = 7
     subset_size = 4
 
-    filename = f'permutation_sequences\sequences\\sequence-{alphabet_length}-{subset_size}.csv'
+    filename = f'subset_sequences\sequences\\sequence-{alphabet_length}-{subset_size}.csv'
     strings = [s.replace(",", "") for s in read_strings_from_file(filename)]
 
     cyclic_sequences = [cyclify(s, subset_size) for s in strings]
