@@ -1,5 +1,6 @@
 Number of sequences: 1532076
-Number of iterations: 93239910      // ADDENDUM: This is the number mod 2^32
+Number of iterations: 93239910      
+   // ADDENDUM: This is the number mod 2^32. I believe the actual number is 93239910 + 105 * 2^32 (451064805990)
 Depth Map:
    Depth: 0, Node count: 0
    Depth: 1, Node count: 0
